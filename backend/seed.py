@@ -12,7 +12,7 @@ def run_seed():
     print("Starting database seeding...")
 
     # 1. Create Admins (Teachers)
-    for i in range(2, 4):
+    for i in range(1, 4):
         username = f"teacher{i}"
         if not db.query(models.User).filter(models.User.username == username).first():
             user = models.User(
