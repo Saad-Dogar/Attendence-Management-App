@@ -1,3 +1,6 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import random
 from datetime import date, timedelta, datetime
 from database import SessionLocal
