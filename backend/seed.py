@@ -3,15 +3,19 @@ load_dotenv()
 
 import random
 from datetime import date, timedelta, datetime
-from database import SessionLocal
+from database import SessionLocal, engine
 import models
 from auth import hash_password
 
 def run_seed():
-    db = SessionLocal()
     print("Starting database seeding...")
+    
+    # This line forces SQLAlchemy to build the tables in your empty Supabase database
+    models.Base.metadata.create_all(bind=engine)
+    
+    db = SessionLocal()
 
-    # 1. Create Admins (Teachers)
+    # 1. Create Admins (Teachers 1, 2, and 3)
     for i in range(1, 4):
         username = f"teacher{i}"
         if not db.query(models.User).filter(models.User.username == username).first():
@@ -23,7 +27,7 @@ def run_seed():
             )
             db.add(user)
 
-    # 2. Create Students
+    # 2. Create Students (1 through 10)
     students = []
     for i in range(1, 11):
         username = f"student{i}"
@@ -41,7 +45,7 @@ def run_seed():
         students.append(student)
 
     db.commit()
-    print("Created 2 teachers and 10 students.")
+    print("Created teachers and students.")
 
     # 3. Generate Historical Attendance (Last 30 Days)
     today = date.today()
