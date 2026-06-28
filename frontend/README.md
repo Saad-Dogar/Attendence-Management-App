@@ -1,16 +1,54 @@
-# React + Vite
+# Attendance Register — Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+The React client for the Attendance Register system. Talks to the FastAPI backend in [`../backend`](../backend) over a JWT-authenticated REST API — see the [root README](../README.md) for the full project overview, API reference, and developer background.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+- **React + Vite**
+- **React Router** for role-based routing (`/login`, `/student`, `/admin`)
+- **Axios** with a request interceptor that auto-attaches the JWT from `localStorage` to every call
+- **Tailwind CSS v4** with a custom design token set
 
-## React Compiler
+## Design concept
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+The direction is "paper attendance register," not a generic SaaS dashboard: a cool paper-white background, ink-navy text, a forest-teal accent for the student role and primary actions, and brass-gold for the admin/teacher role — so the two roles read as visually distinct at a glance, before reading a single word. The signature element is the attendance status badge: a slightly rotated, mono-font pill meant to evoke a stamp on a physical register.
 
-## Expanding the Oxlint configuration
+Type pairing: **Space Grotesk** for display headings, **Inter** for body text, **IBM Plex Mono** for dates, timestamps, and status — the mono face reinforces the "ledger data" feel.
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+Tokens live in `src/index.css` via Tailwind's `@theme` directive (`--color-paper`, `--color-ink`, `--color-stamp`, `--color-brass`, `--color-alert`).
+
+## Folder structure
+
+frontend/
+└── src/
+├── api.js               # Axios instance + JWT interceptor
+├── AuthContext.jsx      # auth state, survives page refresh via /me re-fetch
+├── App.jsx              # router + ProtectedRoute (role-gated)
+├── Login.jsx
+├── StudentDashboard.jsx # mark attendance + personal history table
+├── AdminDashboard.jsx   # full grid, filterable by date
+└── index.css            # Tailwind import + theme tokens
+
+## Setup
+
+```bash
+npm install
+```
+
+To point at a deployed backend, create a `.env` file in this folder (omit it for local dev — it falls back to `http://localhost:8000`):
+
+## Run locally
+
+```bash
+npm run dev
+```
+
+The backend must be running separately on port 8000 — see the root README.
+
+## Build for production
+
+```bash
+npm run build
+```
+
+Outputs a static bundle to `dist/`, ready for deployment as a static site.
