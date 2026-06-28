@@ -2,6 +2,21 @@
 
 A full-stack attendance management system built in a single focused sprint — FastAPI + SQLAlchemy on the backend, React (Vite) + Tailwind on the frontend, with JWT-based role authentication separating Student and Admin (Teacher) workflows.
 
+## 🚀 Live Demo & Test Accounts
+
+Experience the live application here: **[Attendance Management App](https://attendence-management-app-1.onrender.com/login)**
+
+The deployed database is populated with realistic test data, including 30 days of randomized historical attendance. Feel free to explore using the following credentials:
+
+**Admin (Teacher) View**
+* **Username:** `teacher2` (or `teacher3`)
+* **Password:** `pass123`
+* *Test:* View the global dashboard and filter historical attendance by date.
+
+**Student View**
+* **Username:** `student1` (through `student10`)
+* **Password:** `pass123`
+* *Test:* Mark today's attendance and view your personal history.
 
 ## What it does
 
@@ -35,29 +50,28 @@ The backend is a stateless REST API — every protected route resolves the curre
 
 ## Getting started — backend
 
-```bash
-cd backend
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
+To run the backend locally:
 
-Create a `.env` file in `backend/`:
+1. Navigate to the backend folder and activate your virtual environment:
+   `cd backend`
+   `python3 -m venv venv`
+   `source venv/bin/activate`
+   `pip install -r requirements.txt`
 
-SECRET_KEY=<generate with: python3 -c "import secrets; print(secrets.token_hex(32))">
-ALGORITHM=HS256
-ACCESS_TOKEN_EXPIRE_MINUTES=60
+2. Create a `.env` file in `backend/` with the following variables:
+   `SECRET_KEY=<your_generated_secret_key>`
+   `ALGORITHM=HS256`
+   `ACCESS_TOKEN_EXPIRE_MINUTES=60`
+   `DATABASE_URL=sqlite:///./attendance.db`
 
-Run it:
-```bash
-uvicorn main:app --reload --port 8000
-```
+3. Run the server:
+   `uvicorn main:app --reload --port 8000`
 
 Interactive API docs: **http://localhost:8000/docs**
 
 ## Getting started — frontend
 
-See [`frontend/README.md`](./frontend/README.md).
+See `frontend/README.md` for client setup instructions.
 
 ## API overview
 
@@ -71,8 +85,8 @@ See [`frontend/README.md`](./frontend/README.md).
 | GET | `/admin/attendance` | Admin | View/filter the full attendance grid |
 
 ## Project structure
-Attendance-App/
 
+Attendance-App/
 ├── backend/
 │   ├── main.py        # routes
 │   ├── models.py      # SQLAlchemy models — User, Attendance
@@ -80,19 +94,19 @@ Attendance-App/
 │   ├── auth.py        # hashing, JWT, role-gate dependencies
 │   └── database.py    # SQLite/Postgres engine config
 └── frontend/
-└── src/
-├── api.js              # Axios instance, JWT auto-attach
-├── AuthContext.jsx     # current-user state, login/logout
-├── App.jsx             # routing + role-protected routes
-├── Login.jsx
-├── StudentDashboard.jsx
-└── AdminDashboard.jsx
+    └── src/
+        ├── api.js              # Axios instance, JWT auto-attach
+        ├── AuthContext.jsx     # current-user state, login/logout
+        ├── App.jsx             # routing + role-protected routes
+        ├── Login.jsx
+        ├── StudentDashboard.jsx
+        └── AdminDashboard.jsx
 
 ## About the developer
 
 Built by **Muhammad Saad Saleem** ([@Saad-Dogar](https://github.com/Saad-Dogar)) — Computer Science student at **FAST-NUCES**. Currently a Technical Intern at **TechRealm** (since June 2026), contributing to **Preserve My World**, a non-profit NeRF/3D scene reconstruction initiative.
 
-Core background is in C++ — pointer arithmetic, dynamic memory with, and low-level systems thinking — visible in other repos like [ONYX-16](https://github.com/Saad-Dogar/ONYX-16), a 16-bit virtual computer with a custom bilingual assembler, and a raw Win32/GDI text editor. This project was a deliberate stretch in the other direction: a complete full-stack web application.
+Core background is strictly in C++ — focusing on pointer arithmetic, dynamic memory allocation using `new` and `delete[]`, and low-level systems thinking — visible in other repos like [ONYX-16](https://github.com/Saad-Dogar/ONYX-16), a 16-bit virtual computer with a custom bilingual assembler, and a raw Win32/GDI text editor. This project was a deliberate stretch in the other direction: a complete full-stack web application.
 
 ## License
 
